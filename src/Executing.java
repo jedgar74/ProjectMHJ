@@ -12,7 +12,7 @@ import statistics.Analyzer;
 public class Executing {
 
 	Analyzer an = new Analyzer();
-	String problem;
+	String problemname;
 	int nExperiments;
 	boolean analysis = false;
 	boolean file = false;
@@ -24,7 +24,7 @@ public class Executing {
 	
 	
 	public Executing problem(String name){
-		problem = name;
+		problemname = name;
 		
 		return this;
 	}
@@ -104,7 +104,7 @@ public class Executing {
 						.paraMetaheuristic(configFiles[i])
 						.nEvals(nEvalsXInst[j])
 						.nExp(nExperiments)      
-					    .problem(problem, instances[j]);   
+					    .problem(problemname, instances[j]);   
  				agent.init(); 
 				an.add(agent.info, instances[j]);
 			} 
@@ -113,7 +113,7 @@ public class Executing {
 		   an.print();
 		   an.stats("MIN");
 		   if (file)
-		      an.printFile("TEMP", "STATS");
+		      an.printFile(this.problemname, "STATS");
 		}
 	}
 }
