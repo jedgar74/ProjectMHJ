@@ -5,6 +5,14 @@ import state.Population;
 import state.Solution;
 import util.Randomizer;
 
+
+/**
+ * Sine Cosine Algorithm
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class SineCosineAlgorithm extends Heuristic{
 	String shortTerm = "SCA";
 	String initialSolution = "RANDOM"; 

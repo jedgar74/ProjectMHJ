@@ -3,6 +3,13 @@ import java.util.ArrayList;
 
 import java.util.StringTokenizer;
 
+/**
+ * Class of executing several metaheuristics on specific problem
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class Running {
 
 	public static void main(String[] args) {

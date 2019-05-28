@@ -2,7 +2,15 @@ import examples.QuadraticAssignmentProblem;
 import problem.Problem;
 import state.Solution;
 
-public class Prueba3 {
+
+/**
+ * Define a class to test the QAP
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
+public class PruebaQAP {
 
 	public static void main(String[] args) { 
 		/*String typo="INTEGER";

@@ -1,5 +1,13 @@
 package util;
 
+
+/**
+ * Maths
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class Maths {
 	
 	public static int IINFPOS = 2147483647;

@@ -5,6 +5,14 @@ import state.Population;
 import state.Solution;
 import util.Randomizer; 
 
+
+/**
+ * Fireworks Algorithm
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class FireworksAlgorithm extends Heuristic  {
 	String shortTerm = "FWA";
 	String initialSolution = "RANDOM"; 

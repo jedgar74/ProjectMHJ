@@ -1,6 +1,14 @@
 import agent.Agent;
 import statistics.Analyzer;
 
+
+/**
+ * Define the structure to implement an agent with metaheuristics
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class Executing {
 
 	Analyzer an = new Analyzer();
@@ -13,6 +21,7 @@ public class Executing {
 	
 	String[] instances;
 	int[] nEvalsXInst;
+	
 	
 	public Executing problem(String name){
 		problem = name;
@@ -27,11 +36,13 @@ public class Executing {
 		return this;
 	}
 
+	
 	public Executing configFiles(String[] conf ){
 		configFiles = conf;
 		
 		return this;
 	}
+	
 	
 	public Executing methods(String[] methodx ){
 		if (methodx.length == this.configFiles.length){
@@ -55,6 +66,7 @@ public class Executing {
 		return this;
 	}
 	
+	
 	public Executing nEvalsXInst(int[] evals ){
 		if (evals.length == this.instances.length){
 			nEvalsXInst = evals;
@@ -70,6 +82,7 @@ public class Executing {
 		return this;
 	}
 	
+	
 	public Executing analysis(String filex){
 		analysis = true;
 		
@@ -78,6 +91,7 @@ public class Executing {
 		
 		return this;
 	}
+	
 	
 	public void run(){
 		for (int j=0; j< instances.length; j++){

@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import state.Operators;
 import state.Solution; 
 
+
+/**
+ * Basic Stats
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class BasicStats {
 	ArrayList<Solution> solutions = new ArrayList<Solution>();
 	String label;

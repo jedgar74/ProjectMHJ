@@ -2,7 +2,7 @@ import examples.ToolSwitchingProblem;
 import problem.Problem;
 import util.MatrixI;
 
-public class Prueba {
+public class PruebaToSP {
 
 	public static void main(String[] args) { 
 		/*String typo="INTEGER";

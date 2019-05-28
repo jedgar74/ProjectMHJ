@@ -6,6 +6,14 @@ import state.Solution;
 import util.Maths;
 import util.Randomizer; 
 
+
+/**
+ * Cuckoo Search
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class CuckooSearch extends Heuristic  {
 	String shortTerm = "CS";
 	String initialSolution = "RANDOM"; 

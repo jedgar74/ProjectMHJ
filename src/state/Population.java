@@ -7,7 +7,9 @@ import problem.Problem;
 /**
  * Define a population of solutions
  * 
- * @author Jhon Edgar Amaya
+ * 
+ * @author Jhon E. Amaya
+ *
  */
 public class Population implements Cloneable{
 

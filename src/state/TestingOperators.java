@@ -3,7 +3,15 @@ package state;
 import examples.NQueens;
 import problem.Problem;
 
-public class PruebaOP {
+
+/**
+ * Testing Operators
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
+public class TestingOperators {
 
 	public static void main(String[] args) { 
 		/*String typo="INTEGER";

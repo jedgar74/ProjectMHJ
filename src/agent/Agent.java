@@ -30,7 +30,7 @@ import statistics.BasicStats;
  * Define the structure to implement an agent with metaheuristics
  * 
  * 
- * @author Jhon Edgar Amaya
+ * @author Jhon E. Amaya
  *
  */
 public class Agent {
@@ -135,9 +135,7 @@ public class Agent {
 			problem = new SingleMachineTotalWeightedTardinessProblem(nameIns, nJobs); 
 		}		
 		return this;
-	}
-	
-	
+	} 
 	  
 
 	public void init(){

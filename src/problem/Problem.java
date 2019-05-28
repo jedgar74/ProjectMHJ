@@ -2,6 +2,14 @@ package problem;
 
 import state.Solution;
 
+
+/**
+ * Problem
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class Problem {
 	 
 	public int nVar;

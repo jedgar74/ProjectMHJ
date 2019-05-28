@@ -9,6 +9,14 @@ import java.util.Vector;
 
 import util.Matrix;
 
+
+/**
+ * Analyzer
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class Analyzer {
 	ArrayList<BasicStats> nameParameters = new ArrayList<BasicStats>();
 	ArrayList<String> instances = new ArrayList<String>();

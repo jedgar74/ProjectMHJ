@@ -4,6 +4,14 @@ import java.util.ArrayList;
 
 import problem.Problem;
 
+
+/**
+ * Tracker
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class Tracker {
 	ArrayList<String> evaluations = new ArrayList<String>();
 	ArrayList<String> fitness = new ArrayList<String>();

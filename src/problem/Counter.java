@@ -1,5 +1,13 @@
 package problem;
 
+
+/**
+ * Counter
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class Counter {
 	public int count;
 	public int limit;

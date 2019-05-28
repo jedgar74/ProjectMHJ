@@ -2,12 +2,13 @@ package state;
 
 import java.util.ArrayList; 
 
+
 /**
- *  
+ * Cycles
  * 
- * ...
  * 
- * @author Jhon Edgar Amaya
+ * @author Jhon E. Amaya
+ *
  */
 public class Cycles { 
 	

@@ -2,6 +2,14 @@ package basic;
 
 import util.Randomizer;
 
+
+/**
+ * Integer
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class OnlyInteger implements Variable{
 	int value; 
 	

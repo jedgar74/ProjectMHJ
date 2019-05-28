@@ -4,6 +4,14 @@ import problem.Problem;
 import state.Solution;
 import util.Randomizer;
 
+
+/**
+ * Simulating Annealing
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class SimulatingAnnealing extends Heuristic  {
 	String shortTerm = "SA";
 	double initTemperature = 0;

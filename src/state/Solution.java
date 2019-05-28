@@ -5,6 +5,14 @@ import basic.Variable;
 import basic.OnlyInteger;
 import basic.BinaryN; 
 
+
+/**
+ * Solution
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class Solution  implements  Cloneable  {
 	public Variables var ; 
 	public double fitness ;

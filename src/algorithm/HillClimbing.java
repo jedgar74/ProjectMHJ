@@ -4,7 +4,7 @@ import problem.Problem;
 import state.Solution;
 
 /**
- *   by Jhon Edgar Amaya
+ * Hill Climbing
  * 
  * ...
  * 

@@ -11,6 +11,14 @@ import problem.Problem;
 import state.Solution;
 import util.MatrixI;
 
+
+/**
+ * Single Machine Total Weighted Tardiness Problem
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class SingleMachineTotalWeightedTardinessProblem extends Problem {
 
 	public int nExTardiness;

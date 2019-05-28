@@ -11,6 +11,14 @@ import problem.Problem;
 import state.Solution; 
 import util.MatrixI;
 
+
+/**
+ * Tool Switching Problem
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class ToolSwitchingProblem extends Problem {
 
 	public int nTools ; 

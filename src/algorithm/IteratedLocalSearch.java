@@ -3,6 +3,14 @@ package algorithm;
 import problem.Problem; 
 import state.Solution;
 
+
+/**
+ * Iterated Local Search
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class IteratedLocalSearch extends Heuristic {
 	String shortTerm = "ILS";
 	String initialSolution = "RANDOM";  

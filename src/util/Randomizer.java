@@ -2,6 +2,14 @@ package util;
 
 import java.util.Random;
 
+
+/**
+ * Randomizer
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class Randomizer {
 
 	static Random r = new Random();

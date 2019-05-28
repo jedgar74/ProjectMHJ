@@ -5,6 +5,14 @@ import state.Operators;
 import state.Solution;
 import statistics.BasicStats;
 
+
+/**
+ * Random Walk
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class RandomWalk extends Heuristic  {
 	String shortTerm = "RW";
 	double factorNeighs = 0;

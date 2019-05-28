@@ -4,6 +4,14 @@ import java.util.ArrayList;
 
 import state.Solution;
 
+
+/**
+ * Internal
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class Internal {
 	
 	public boolean isPopulation = false;

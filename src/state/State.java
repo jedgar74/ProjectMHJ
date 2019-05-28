@@ -2,6 +2,14 @@ package state;
 
 import basic.Variable;
 
+
+/**
+ * State
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class State {
 	public Variable[] var;
 	public double fitness;

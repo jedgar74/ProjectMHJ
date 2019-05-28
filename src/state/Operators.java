@@ -9,6 +9,14 @@ import problem.Problem;
 import util.Maths;
 import util.Randomizer;
 
+
+/**
+ * Operators
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class Operators { 
 	
 	/*public void swappping(Variables v, int t1, int t2){

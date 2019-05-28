@@ -1,5 +1,12 @@
 /*import statistics.Analyzer;*/
 
+/**
+ * Main class of executing several metaheuristics on specific problem
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class ExecuteAll {
 
 	public static void main(String[] args) {

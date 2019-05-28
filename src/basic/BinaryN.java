@@ -2,6 +2,14 @@ package basic;
 
 import util.Randomizer;
 
+
+/**
+ * Binary
+ * 
+ * 
+ * @author Jhon E. Amaya
+ *
+ */
 public class BinaryN implements Variable{
 	int value;
 	int uLimit;
