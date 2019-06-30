@@ -34,21 +34,21 @@ public class ExecuteOne {
 				.nExp(2)
 				.problem("RSP", "n9m5.txt");*/
 				
-		Agent agent = new Agent() 
+		/*Agent agent = new Agent() 
 				//.metaheuristic("GA") 
 				//.paraMetaheuristic("GA20o")
 				.metaheuristic("ILS") 
 				.paraMetaheuristic("ILSFb")
 				.nEvals(100000)
 				.nExp(32)
-				.problem("QAP", "had12.dat");
+				.problem("QAP", "had12.dat");*/
 
-		 /*Agent agent = new Agent() 
+		 Agent agent = new Agent() 
 				.metaheuristic("SA") 
 				.paraMetaheuristic("SAR")
 				.nEvals( 12500 )
 				.nExp(10)
-				.problem("NQs", "5");  */
+				.problem("NQs", "5");  
 		
 		/*Agent agent = new Agent() 
 				.metaheuristic("GA") 

@@ -17,9 +17,9 @@ public class ExecuteAll {
 		//String[] configFile ={ "ICAc",  "ICAd"}; 
 		//String[] instanc = { "25", "20" };
 		//int[] nEvalsXIns = {  6500 , 4000 }; 
-		String[] methods ={ "GA",  "ILS", "SA" };
-		String[] configFile ={ "GA20o",  "ILSFa", "SAG"}; 
-		String[] instanc = { "had12.dat" };
+		String[] methods ={ "GA",  "FWA" };
+		String[] configFile ={ "GA20o",  "FWA20"}; 
+		String[] instanc = { "24" };
 		int[] nEvalsXIns = {  100000 }; 
 	    /* String[] instanc ={ "25", "50", "100", "20", "36", "40"};
 		int[] nEvalsXIns ={  6500 , 50000 , 200000, 4000, 12960, 16000 }; */
@@ -28,8 +28,8 @@ public class ExecuteAll {
 
 		Executing e = new Executing()
 				.analysis("file")
-				.problem("QAP")
-				.nExperiments(32)
+				.problem("NQs")
+				.nExperiments(4)
 				.configFiles(configFile) 
 				.methods(methods)
 				.instances(instanc)

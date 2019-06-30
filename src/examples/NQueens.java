@@ -42,28 +42,38 @@ public class NQueens extends Problem {
 	public void evaluate(Solution s){ 
 		int nCollitions = 0;
 
-		for (int i = 1; i < nVar; i++) {
-			int b = 0;
-			
-			int u = ((OnlyInteger) s.getVar().allvar[i]).getValue();
-			
-			int c = i;
+		for (int i = 1; i < s.nVar; i++) {
+			int qbef = 0; 
+			int qupd = ((OnlyInteger) s.getVar().allvar[i]).getValue();			
+			int col = i;
 			int k = 0;
-			while (c > 0) {
-				k = i - c + 1;
-				b = ((OnlyInteger) s.getVar().allvar[i-1]).getValue();
-		 
-				//if (u - k >= 0 && u - k == b)
-				//	a++;
+			
+			while (col > 0) {
+				k = i - col + 1;
+				qbef = ((OnlyInteger) s.getVar().allvar[i-k]).getValue();				
+				// diagonal inferior
+				if (qupd - k >= 0 && qupd == qbef + k) {
+					nCollitions++;
+				}
 				// diagonal superior
-				if (u - k >= 0 && u - k == b)
+				if (qupd + k < s.nVar && qupd == qbef - k) {
 					nCollitions++;
-				if (u + 1 < nVar && u + 1 == b)
+				}
+				/*
+				if (qupd - k >= 0 && qupd - k == qbef ) {
 					nCollitions++;
-				c--;
+					System.out.println("I qupd="+qupd+" k="+k+" qbef="+qbef+" col="+col);
+				}
+				
+				if (qupd + k < nVar && qupd + k == qbef) {
+					nCollitions++;
+					System.out.println("S qupd="+qupd+" k="+k+" qbef="+qbef+" col="+col);
+				}*/
+				col--;
 			}
 		}
 		 
 		s.setFitness(nCollitions);
 	}
+ 
 }
