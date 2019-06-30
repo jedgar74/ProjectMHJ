@@ -156,7 +156,7 @@ public class Heuristic {
 			paramet = "NULL";
 		}
 
-		if (paramet.trim().equals("LOCALSEARCH")) {
+		if (paramet.trim().equals("METHOD")) { //I changed the original LOCALSEARCH
 
 		} else {
 			this.nameParameters.add(paramet.trim());
