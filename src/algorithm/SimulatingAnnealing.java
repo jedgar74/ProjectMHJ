@@ -20,6 +20,13 @@ public class SimulatingAnnealing extends Heuristic  {
 	double omega = -1;
 	String initialSolution = "RANDOM"; 
     
+/*
+ * 
+ * name:  
+ * @param problem
+ * @param _fileConfig 
+ * 
+ */
     public SimulatingAnnealing(Problem problem, String _fileConfig) {
 
 		this.objProblem = problem;
@@ -71,6 +78,13 @@ public class SimulatingAnnealing extends Heuristic  {
 
 	}
     
+    
+/*
+ * 
+ * name: setParameters
+ * @param _problem 
+ * 
+ */ 
 	public void setParameters(Problem _problem) {
 		for (int i = 0; i < nameParameters.size(); i++) {
 
@@ -90,6 +104,13 @@ public class SimulatingAnnealing extends Heuristic  {
 		}
 	}
 
+
+/*
+ * 
+ * name:  
+ * @param _init 
+ * 
+ */ 
 	public void simulatingAnnealing(Solution _init) {
 
 		Solution nextState = (Solution) _init.clone();
@@ -140,6 +161,7 @@ public class SimulatingAnnealing extends Heuristic  {
 		}
 		return temperature;
 	}
+	
 	
 	public double updateTemperature(double temperature) {
 
