@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import util.Maths;
 import util.Matrix;
 
 
@@ -22,17 +23,29 @@ public class Analyzer {
 	ArrayList<String> instances = new ArrayList<String>();
     String info ="";
 	
+    public BasicStats getInfo(int i){
+	
+		return nameParameters.get(i);
+	}
     
 	public void stats (String typeProblem){
-		/*FriedmanImanHolm f = new FriedmanImanHolm(3); 
+		FriedmanImanHolm f = new FriedmanImanHolm(3); 
 		f.setLabels(getLabels());
 		f.setValues(getResults());
 		if (typeProblem.equals("MIN")){
 			f.minProblem();
 			info = f.getInfo();
-		}*/
+			/*System.out.println(info);*/
+		}
 	}
 	
+	public void addInfo(String inf) {
+		info = info + inf;
+	}
+	
+	public int getSize () {
+		return this.nameParameters.size();
+	}
 	
 	public Matrix getResults(){
 		int i=1;
@@ -134,17 +147,17 @@ public class Analyzer {
 			System.out.println(":: N. Experiment.:: "+nameParameters.get(ini).nSolutions());
 			System.out.println("-----------------------------------");
 			for (int rr = ini; rr < fin; rr++) {
-				System.out.print (this.spaces(nameParameters.get(rr).getLabel(), 24)  );
+				System.out.print (Maths.spaces(nameParameters.get(rr).getLabel(), 24)  );
 
 				System.out.print (
-						this.spaces(""+precision(nameParameters.get(rr).getBetter(), 2), 9) );
+						Maths.spaces(""+Maths.precision(nameParameters.get(rr).getBetter(), 2), 9) );
 				System.out.print (
-						this.spaces(""+precision(nameParameters.get(rr).getNBetter(), 2), 9) );
+						Maths.spaces(""+Maths.precision(nameParameters.get(rr).getNBetter(), 2), 9) );
 				double ave = nameParameters.get(rr).average();
 				System.out.print (
-						this.spaces(""+precision(ave, 2), 9) );
+						Maths.spaces(""+Maths.precision(ave, 2), 9) );
 				System.out.println (
-						this.spaces(""+precision(nameParameters.get(rr).stDeviat(ave), 2), 9) );
+						Maths.spaces(""+Maths.precision(nameParameters.get(rr).stDeviat(ave), 2), 9) );
 
 			}
 		}
@@ -200,21 +213,22 @@ public class Analyzer {
 			r = r+":: N. Experiment.:: "+nameParameters.get(ini).nSolutions()+"\n";
 			r = r+"-----------------------------------"+"\n";
 			for (int rr = ini; rr < fin; rr++) {
-				r = r+this.spaces(nameParameters.get(rr).getLabel(), 24) ;
+				r = r+Maths.spaces(nameParameters.get(rr).getLabel(), 24) ;
 
-				r = r+ this.spaces(""+precision(nameParameters.get(rr).getBetter(), 2), 9) ;
-				r = r+ this.spaces(""+precision(nameParameters.get(rr).getNBetter(), 2), 9) ;
+				r = r+ Maths.spaces(""+Maths.precision(nameParameters.get(rr).getBetter(), 2), 9) ;
+				r = r+ Maths.spaces(""+Maths.precision(nameParameters.get(rr).getNBetter(), 2), 9) ;
 				double ave = nameParameters.get(rr).average();
-				r = r+ this.spaces(""+precision(ave, 2), 9) ;
-				r = r+ this.spaces(""+precision(nameParameters.get(rr).stDeviat(ave), 2), 9)+"\n";
+				r = r+ Maths.spaces(""+Maths.precision(ave, 2), 9) ;
+				r = r+ Maths.spaces(""+Maths.precision(nameParameters.get(rr).stDeviat(ave), 2), 9)+"\n";
 
 			}
 			r = r+"-----------------------------------"+"\n";
 			for (int rr = ini; rr < fin; rr++) {
-				r = r+"\n"+this.spaces(nameParameters.get(rr).getLabel(), 24) +"\n";
+				r = r+"\n"+Maths.spaces(nameParameters.get(rr).getLabel(), 24) +"\n";
 				r = r+"-----------------------------------"+"\n";
 				for (int e = 0; e < nameParameters.get(rr).nSolutions(); e++) { 
 					r = r+ nameParameters.get(rr).getSolutionComplete(e).toString()+"\n";
+					//r = r+ nameParameters.get(rr).getSolutionComplete(e).getFitness()+"\n";
 				} 
 			}
 		}
@@ -242,23 +256,7 @@ public class Analyzer {
 		} 
 	}
 
-	public double precision(double value, int dec){
-		int pwn = (int) Math.pow(10, dec);
-		int nmbr = (int)(value*pwn);
-		return nmbr/(pwn*1.0);
-	}
-
-	public String spaces(String value, int dec){
-		if (value.length() < dec){
-			String temp = "";
-			for (int rr = 0; rr < dec-value.length(); rr++) {	
-				temp = temp+" ";
-			}
-			return temp+value;
-		} else {
-			return value;
-		}
-	}
+	
 
 	/*public void printFile(){
 		try { 

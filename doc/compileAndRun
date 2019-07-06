@@ -1,0 +1,4 @@
+javac -d bin/ -cp "src:./lib/jmathplot.jar"  src/*.java 
+
+java -cp "bin:./lib/jmathplot.jar:./lib/jmathio.jar" ExecuteG
+

@@ -282,4 +282,15 @@ public class Matrix {
 		}
 		return s;
 	}
+	
+	public String toString(int decimal){
+		String s="";
+		for(int i = 0; i < row; i++){
+			for(int j = 0; j < col; j++){
+				s = s + Maths.precisionAndSpaces(this.matrix[i][j], decimal, decimal+7) + " ";
+			}	
+			s = s+"\n";
+		}
+		return s;
+	}
 }

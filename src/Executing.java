@@ -1,6 +1,6 @@
 import agent.Agent;
 import statistics.Analyzer;
-
+import statistics.MulticriteriaMethods;
 
 /**
  * Define the structure to implement an agent with metaheuristics
@@ -12,10 +12,13 @@ import statistics.Analyzer;
 public class Executing {
 
 	Analyzer an = new Analyzer();
+	MulticriteriaMethods mc = new MulticriteriaMethods();
 	String problemname;
 	int nExperiments;
 	boolean analysis = false;
+	boolean analysisMCMA = false;
 	boolean file = false;
+	boolean allSolution = false;
 	String[] configFiles; 
 	String[] methods;
 	
@@ -91,7 +94,23 @@ public class Executing {
 		
 		return this;
 	}
+	 
 	
+	public Executing analysisMCMA(String filex){
+		analysisMCMA = true;
+		
+		if (! filex.equals(""))
+			file = true;
+		
+		return this;
+	}
+	
+	
+	public Executing printAllSolution( ){
+		allSolution = true;
+		
+		return this;
+	}
 	
 	public void run(){
 		for (int j=0; j< instances.length; j++){
@@ -106,14 +125,22 @@ public class Executing {
 						.nExp(nExperiments)      
 					    .problem(problemname, instances[j]);   
  				agent.init(); 
+ 				if (allSolution)
+					agent.info.printAllSolution();
 				an.add(agent.info, instances[j]);
 			} 
 		}
+		
 		if (analysis){
 		   an.print();
-		   an.stats("MIN");
-		   if (file)
-		      an.printFile(this.problemname, "STATS");
+		   an.stats("MIN"); 
 		}
+		
+		if (analysisMCMA){
+		   an.addInfo(mc.info);
+		}
+		
+		if (file)
+			an.printFile(this.problemname, "STATS");
 	}
 }

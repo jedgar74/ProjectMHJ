@@ -1,13 +1,5 @@
 package util;
 
-
-/**
- * Maths
- * 
- * 
- * @author Jhon E. Amaya
- *
- */
 public class Maths {
 	
 	public static int IINFPOS = 2147483647;
@@ -35,5 +27,27 @@ public class Maths {
 	
 	public static double roundToNDecimals(double numero, int  decimals ) {
 		return Math.round(numero*Math.pow(10, decimals))/Math.pow(10, decimals);
+	}
+	
+	public static double precision(double value, int dec){
+		int pwn = (int) Math.pow(10, dec);
+		int nmbr = (int)(value*pwn);
+		return nmbr/(pwn*1.0);
+	}
+
+	public static String spaces(String value, int sp){
+		if (value.length() < sp){
+			String temp = "";
+			for (int rr = 0; rr < sp-value.length(); rr++) {	
+				temp = temp+" ";
+			}
+			return temp+value;
+		} else {
+			return value;
+		}
+	}
+	
+	public static String precisionAndSpaces(double value, int dec, int sp){
+		 return Maths.spaces(""+Maths.precision(value, dec), sp);
 	}
 }
