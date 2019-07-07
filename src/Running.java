@@ -88,14 +88,14 @@ public class Running {
 			//-----------------------------
 			//-----------------------------
 			Executing e = new Executing()
-					.analysis("file")
+					.analysis( )
 					.problem(args[0])
 					.nExperiments(Integer.parseInt(args[1]))
 					.configFiles(configFile)
 					.methods(methods)
 					.instances(instanc)
-					.nEvalsXInst(nEvalsXIns) ; 
-
+					.nEvalsXInst(nEvalsXIns)  
+					.save();
 			e.run();
 		} catch(Exception e){
 			e.printStackTrace();

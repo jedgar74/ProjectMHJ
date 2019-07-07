@@ -293,4 +293,17 @@ public class Matrix {
 		}
 		return s;
 	}
+	
+	public void trasponse() { 
+		Matrix values3 = new Matrix(getCol(), getRow()) ;
+		for (int i = 0; i < getRow(); i++) {
+			for (int j = 0; j < getCol(); j++) {
+				values3.setElement(j, i, getElement(i, j)) ;
+			}
+		}  
+		
+		setMatrix(values3.getMatrix());
+		row = values3.getRow();
+		col = values3.getCol();
+	}
 }

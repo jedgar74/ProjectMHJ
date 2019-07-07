@@ -12,7 +12,7 @@ import statistics.MulticriteriaMethods;
 public class Executing {
 
 	Analyzer an = new Analyzer();
-	MulticriteriaMethods mc = new MulticriteriaMethods();
+	MulticriteriaMethods mc;
 	String problemname;
 	int nExperiments;
 	boolean analysis = false;
@@ -25,6 +25,11 @@ public class Executing {
 	String[] instances;
 	int[] nEvalsXInst;
 	
+	double[] weights;
+	int[] typeCriteria; // 0 is cost, 1 is benefit
+	double[][] matrixAC;
+	int code; // 0 is all, 1 is topsis, 2 is vikor
+	boolean noMatrix=false;
 	
 	public Executing problem(String name){
 		problemname = name;
@@ -86,21 +91,27 @@ public class Executing {
 	}
 	
 	
-	public Executing analysis(String filex){
-		analysis = true;
-		
-		if (! filex.equals(""))
-			file = true;
+	public Executing analysis( ){
+		analysis = true; 
 		
 		return this;
 	}
 	 
 	
-	public Executing analysisMCMA(String filex){
-		analysisMCMA = true;
+	public Executing analysisMCMA(double[] w, int[] tCri, int code){
+		analysisMCMA = true; 
+		weights = w; 
+		typeCriteria = tCri; 
+		code = code; 
+		matrixAC =  new double[methods.length][weights.length];
+		noMatrix = true; 
 		
-		if (! filex.equals(""))
-			file = true;
+		return this;
+	}
+	
+	
+	public Executing save( ){
+		file = true;
 		
 		return this;
 	}
@@ -111,6 +122,39 @@ public class Executing {
 		
 		return this;
 	}
+	
+	
+	public void calcMatrix( ){
+		double media=0;
+		
+		if (weights.length == instances.length){
+			for (int k=0; k< instances.length; k++){
+				int control = k*methods.length;
+				for(int i=0; i < methods.length; i++) { 
+					media=an.getInfo(i+control).average(); 
+					matrixAC[i][k]=media;   
+				}
+			}
+	    
+		} else if (weights.length == 2*instances.length){
+			for (int k=0; k< instances.length; k++){
+				int control = k*methods.length;
+				for(int i=0; i < methods.length; i++) {
+	    		
+					for(int j=2*k;j < 2*(k+1);j++) {
+						if (j%2==0) {
+							media=an.getInfo(i+control).average(); 
+							matrixAC[i][j]=media; 
+						} else {
+							media=an.getInfo(i+control).average(); 
+							matrixAC[i][j]=an.getInfo(i+control).stDeviat(media);
+						}
+					}
+				}
+			}			
+		}
+	}
+	
 	
 	public void run(){
 		for (int j=0; j< instances.length; j++){
@@ -132,12 +176,16 @@ public class Executing {
 		}
 		
 		if (analysis){
-		   an.print();
-		   an.stats("MIN"); 
+			an.print();
+			an.stats("MIN"); 
 		}
 		
 		if (analysisMCMA){
-		   an.addInfo(mc.info);
+			if (noMatrix)
+				calcMatrix( );
+			mc = new MulticriteriaMethods(methods.length, weights.length, matrixAC, 
+				weights, typeCriteria, code);
+			an.addInfo(mc.info);
 		}
 		
 		if (file)

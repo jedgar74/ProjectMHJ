@@ -355,8 +355,7 @@ public class FriedmanImanHolm {
 			System.out.println("java FriedmanIman _file _top");
 		}
 	}
-
-
+ 
 
 	public  void genFilesMatlab( String prefix, Matrix ranks, Vector<String> labels){
 
@@ -390,6 +389,7 @@ public class FriedmanImanHolm {
 			e.printStackTrace();
 		}		
 	}
+
 
 	public  String sortMatrix(String nameFile, String prefix, Matrix ranks, Vector<String> labels){
 		String s = "n ";
@@ -513,6 +513,7 @@ public class FriedmanImanHolm {
 		return s; 
 	}
 
+
 	public  void genFilesM( String prefix, String names){
 		String auxiliar = prefix+""+nameFile;
 		auxiliar = auxiliar.substring(0, auxiliar.length()-4)+ ".m";
@@ -556,6 +557,7 @@ public class FriedmanImanHolm {
 			e.printStackTrace();
 		}		
 	}
+
 
 	public  double calculateFriedman(Matrix values2, Matrix ranks2, int N, int K){
 		double Friedman2 = 0.0;
@@ -618,6 +620,7 @@ public class FriedmanImanHolm {
 		info = info + "Calculate with degree = "+(K-1)+ " and obtain critical value with one sided "+"\n";
 		return Friedman2;
 	}
+
 
 	@SuppressWarnings("static-access")
 	public   void calculateHolm(Matrix ranks2, int N, int K, Vector<String> labess){
@@ -700,6 +703,7 @@ public class FriedmanImanHolm {
 		System.out.println();
 	}
 
+
 	@SuppressWarnings("static-access")
 	public  double calculateIman(double Friedman, int N, int K){
 		System.out.println("***********************************************");
@@ -730,6 +734,7 @@ public class FriedmanImanHolm {
 		return ttm /ttd;
 	}
 
+
 	public  void genMatrix(Matrix ranks, String nameFile2, String prefix, Vector<String> labels) throws IOException{
 		File auxFile2 = new File("./matlab", prefix+""+nameFile2);
 		FileWriter input2 = new FileWriter(auxFile2);
@@ -751,6 +756,7 @@ public class FriedmanImanHolm {
 		input2.close();
 	}
 
+
 	public  String roundersII(double _d, int decimal){
 
 		double presc = Math.pow(10, decimal);
@@ -762,12 +768,21 @@ public class FriedmanImanHolm {
 		return ""+tmp;
 	}
 	
+	
 	public Vector<String> getLabels() {
 		return labels;
 	}
 
+
 	public void setLabels(Vector<String> labels) {
 		this.labels = labels;
+	}
+
+
+	public void setLabels(String[] labels) {
+		for(int i = 0; i < labels.length; i++){
+			 this.labels.addElement(labels[i]);
+		}
 	}
 
 	public Matrix getValues() {
@@ -777,6 +792,11 @@ public class FriedmanImanHolm {
 	public void setValues(Matrix values) {
 		this.values = values;
 	}
+
+	public void setValues(double[][] dvalues) {
+		this.values = new Matrix(dvalues.length, dvalues[0].length) ;
+		this.values.setMatrix(dvalues);
+ 	}
 
 	public String getInfo() {
 		return info;

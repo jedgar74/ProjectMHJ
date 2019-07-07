@@ -10,10 +10,7 @@ import util.Matrix;
 public class MulticriteriaMethods {
 	
 	public static String info;
-	public static int decimal =4;
-	
-	public MulticriteriaMethods() {
-	}
+	public static int decimal =4; 
 
 	public MulticriteriaMethods(int m, int n, double[][] t, double[] w, int[] c, int code) {
 		Matrix A = new Matrix(m, n);
