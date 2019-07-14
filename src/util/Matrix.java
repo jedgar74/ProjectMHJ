@@ -59,6 +59,16 @@ public class Matrix {
 		}
 	}
 
+	public void zeros() {
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				this.matrix[i][j] = 0;
+			} 
+		}
+	}
+
+ 
+	
 	public void printlnAll(int b) {
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
@@ -158,6 +168,8 @@ public class Matrix {
 	public void setCol(int n) {
 		this.col = n;
 	}
+
+
 
 	public double[][] inverted(double[][] aux, int b) {
 		double[][] oth = new double[2 * b][b];
@@ -294,6 +306,17 @@ public class Matrix {
 		return s;
 	}
 	
+	public String toString(String g, int decimal){
+		String s="   "+g+"   \n";
+		for(int i = 0; i < row; i++){
+			for(int j = 0; j < col; j++){
+				s = s + Maths.precisionAndSpaces(this.matrix[i][j], decimal, decimal+7) + " ";
+			}	
+			s = s+"\n";
+		}
+		return s;
+	}
+	
 	public void trasponse() { 
 		Matrix values3 = new Matrix(getCol(), getRow()) ;
 		for (int i = 0; i < getRow(); i++) {
@@ -305,5 +328,101 @@ public class Matrix {
 		setMatrix(values3.getMatrix());
 		row = values3.getRow();
 		col = values3.getCol();
+	}
+	
+	
+	public double[] sumCols() { 
+		double[] x = new double[getRow()];
+		
+		for (int i = 0; i < getRow(); i++) {
+			double sum=0;
+			for (int j = 0; j < getCol(); j++) {
+				sum= sum+getElement(i, j) ;
+			}
+			x[i]= sum ;
+		}  
+		
+		return x;
+	}
+	
+	public double[] sumRows() { 
+		double[] x = new double[getCol()];
+		
+		for (int j = 0; j < getCol(); j++) {
+			double sum=0;
+			for (int i = 0; i < getRow(); i++) {
+				sum= sum+getElement(i, j) ;
+			}
+			x[j]= sum ;
+		}  
+		
+		return x;
+	}
+	
+	public double[] sumCols(double factor) { 
+		double[] x = new double[getRow()];
+		
+		for (int i = 0; i < getRow(); i++) {
+			double sum=0;
+			for (int j = 0; j < getCol(); j++) {
+				sum= sum+getElement(i, j) ;
+			}
+			x[i]= sum * factor;
+		}  
+		
+		return x;
+	}
+	
+	public double[] sumRows(double factor) { 
+		double[] x = new double[getCol()];
+		
+		for (int j = 0; j < getCol(); j++) {
+			double sum=0;
+			for (int i = 0; i < getRow(); i++) {
+				sum= sum+getElement(i, j) ;
+			}
+			x[j]= sum * factor;
+		}  
+		
+		return x;
+	}
+	
+	public double[] getCols(int factor) { 
+		double[] x = new double[getRow()];
+		
+		for (int j = 0; j < getCol(); j++) { 
+			if (j==factor) { 
+				for (int i = 0; i < getRow(); i++) {
+					x[i]= getElement(i, j) ;
+				}
+			}
+		}  
+		
+		return x;
+	}
+	
+	
+	public double  minCol (int j) { 
+		double x=1e40; 
+		
+		for (int i = 0; i < getRow(); i++) {
+			if (getElement(i, j)<x ) {
+				 x=getElement(i, j);
+			}
+		}  
+		
+		return x;
+	}
+	
+	public double maxCol (int j) { 
+		double x= -1e40; 
+		
+		for (int i = 0; i < getRow(); i++) {
+			if (getElement(i, j)> x ) {
+				 x=getElement(i, j);
+			}
+		}  
+		
+		return x;
 	}
 }

@@ -184,7 +184,8 @@ public class Executing {
 			if (noMatrix)
 				calcMatrix( );
 			mc = new MulticriteriaMethods(methods.length, weights.length, matrixAC, 
-				weights, typeCriteria, code);
+				weights, typeCriteria );
+			mc.run(code);	
 			an.addInfo(mc.info);
 		}
 		

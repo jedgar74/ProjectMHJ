@@ -32,8 +32,13 @@ public class Analyzer {
 		FriedmanImanHolm f = new FriedmanImanHolm(3); 
 		f.setLabels(getLabels());
 		f.setValues(getResults());
-		if (typeProblem.equals("MIN")){
+		f.setGraph(true);
+		if (typeProblem.equals("MIN")){	
 			f.minProblem();
+			info = f.getInfo();
+			/*System.out.println(info);*/
+		} else if (typeProblem.equals("MAX")){	
+			f.maxProblem();
 			info = f.getInfo();
 			/*System.out.println(info);*/
 		}

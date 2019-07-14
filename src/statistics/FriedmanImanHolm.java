@@ -9,6 +9,8 @@ import java.util.*;
 
 import util.Matrix;
 
+import graph.BoxPlotGraph;
+
 /*import sun.awt.SunHints.Value;*/
 /**
  * Tiene como entrada una matrix 
@@ -31,6 +33,8 @@ public class FriedmanImanHolm {
     String info;
 
 	Matrix values;
+	
+	boolean graph =false;
 
 	public FriedmanImanHolm() {
 		super(); 
@@ -341,6 +345,21 @@ public class FriedmanImanHolm {
 
 			calculateHolm(ranks2, N2, K2, labess);
 
+			
+			if (graph){
+				BoxPlotGraph demo = new BoxPlotGraph("", ranks.getMatrix(), labels);
+				demo.pack();
+				/* RefineryUtilities.centerFrameOnScreen(demo);*/
+				demo.setVisible(true);
+				
+				BoxPlotGraph demf = new BoxPlotGraph("", ranks2.getMatrix(), labess);
+				demf.pack();
+				/* RefineryUtilities.centerFrameOnScreen(demo);*/
+				demf.setVisible(true);
+				
+			}
+
+
 			/*
 			 * I include methods to generate boxplot in Matlab. First, sort columns 
 			 * for median and media. Second, generate the files *.m     
@@ -356,6 +375,336 @@ public class FriedmanImanHolm {
 		}
 	}
  
+
+	public void maxProblem(){
+		try{
+			System.out.println("\n*** Jhon Edgar Amaya ***"); 
+
+			Calendar dateAndTime = new GregorianCalendar();
+			nameFile =dateAndTime.get(Calendar.DAY_OF_MONTH)+"_"
+					+(dateAndTime.get(Calendar.MONTH)+1)+"_"
+					+dateAndTime.get(Calendar.YEAR)+"_"
+					+dateAndTime.get(Calendar.HOUR_OF_DAY)+"_"
+					+dateAndTime.get(Calendar.MINUTE)+".txt";
+					 
+			
+			/*StatisticsII stats = new StatisticsII();*/
+			//Read File
+			/*File auxFile = new File(".", nameFile);
+			FileReader input = new FileReader(auxFile);
+			char buffer[] = new char[1];
+
+			String tmp = "";
+			Vector<String> lines = new Vector<String>();            
+			for (int charsRead = input.read(buffer); charsRead != -1; charsRead = input.read(buffer)) {
+
+				char caracter = buffer[0];
+
+				if (caracter == '\n') {
+					lines.addElement(tmp);
+					tmp = "";				
+				} else				
+					tmp = new StringBuffer(String.valueOf(tmp)).append(caracter).toString();
+			}				
+
+			input.close();*/
+
+			/*Vector<String> labels = new Vector<String>();
+			int k = 0; 
+			StringTokenizer tokens=new StringTokenizer(lines.elementAt(0));
+			while(tokens.hasMoreTokens()){
+				if (k != 0){
+					labels.addElement(tokens.nextToken());
+				} else {
+					String rse = tokens.nextToken();
+				}	
+				//System.out.println(tokens.nextToken());
+				k++;
+			}
+
+			//--System.out.println("-------------------------------- "+k);
+
+			int K = k - 1; //indicate number algorithm
+			int N = lines.size() - 1; //indicate number experiments
+*/
+			
+			int K = this.values.getCol();
+			int N = this.values.getRow();
+					
+			System.out.println("***********************************************");
+			System.out.println("******* ALG : "+K+ " --- INST : "+N+" *****");
+			System.out.println("***********************************************");
+
+			info = info + "\nAlgorithms : "+K+ " --- Instances : "+N+"\n";
+			info = info + "-----------------------------------\n";
+			//Create matrix values
+			/*Matrix values = new Matrix(N, K);
+			StringTokenizer tokens2;
+			for (int j = 1; j < lines.size(); j++){
+				tokens2 = new StringTokenizer(lines.elementAt(j));
+				int g = 0;
+				while(tokens2.hasMoreTokens()){
+					String r =  tokens2.nextToken();
+					if (r.indexOf(",") != -1)
+						r= r.replaceAll(",", ".");
+					if (g != 0){
+						values.setMatrix(j-1, g-1, Double.parseDouble(r));
+					}					
+					g++; 
+				}
+			}*/
+
+			//values.printlnAll();
+
+			//Calculate Rank
+			Matrix ranks = new Matrix(N, K);
+			Vector<String> exx = new Vector<String>();
+			Vector<String> ddd = new Vector<String>();
+			for (int j = 0; j < values.getRow(); j++){
+				//for (int j = 0; j < 1; j++){
+				for (int g = 0; g < values.getCol(); g++){
+					exx.addElement(""+g);
+				}
+
+				double ranking = 1;
+
+				while(exx.size() != 0){
+					//double min = 1000000.0;
+ 					double max = 1e-40; 
+
+					for (int g = 0; g < exx.size(); g++){
+						/*double tmpx = values.getMatrix(j, Integer.parseInt(exx.elementAt(g)));*/
+						double tmpx = values.getElement(j, Integer.parseInt(exx.elementAt(g)));
+ 
+						if (tmpx > max){
+							ddd.removeAllElements();
+							max = tmpx;
+							ddd.addElement(exx.elementAt(g));
+						} else if (tmpx == max){
+							ddd.addElement(exx.elementAt(g));
+						}
+					}
+					double rankTemp = (ddd.size()+ 2*ranking - 1)/2;
+					//System.out.println(""+ranking+"---"+ddd.size()+"..."+rankTemp);
+					ranking=ranking + ddd.size();
+
+					for (int g = 0; g < ddd.size(); g++){
+						/*ranks.setMatrix(j, Integer.parseInt(ddd.elementAt(g)), rankTemp);*/
+						ranks.setElement(j, Integer.parseInt(ddd.elementAt(g)), rankTemp);
+					}
+
+					for (int g = 0; g < ddd.size(); g++){
+						int rs = exx.indexOf(ddd.elementAt(g));
+						exx.removeElementAt(rs);						
+						//ranks.setMatrix(j, Integer.parseInt(ddd.elementAt(g)), rankTemp);
+					}
+
+				}				
+
+			}
+
+			System.out.println();
+			System.out.println("***********************************************");
+			System.out.println("*** RANKS IN THE MATRIX ***********************");
+			System.out.println("***********************************************");
+
+			
+			info = info + "\nRanks Matrix   \n";
+			info = info + "-----------------------------------\n";
+			// print matrix of ranks
+			genMatrix(ranks, nameFile, "Rank_", labels);  /// Esto es nuevo!!!!!!!!!!!!!!!
+			ranks.printlnAll();
+			info = info + ranks.toString();
+
+			//Calculate Friedman
+			double Friedman = calculateFriedmanX( ranks, N, K);
+
+			//Calculate Iman 
+			double Iman = calculateIman(Friedman, N, K);
+
+			Vector<String> labeee = new Vector<String>();
+			for (int g = 0; g < labels.size(); g++){
+				labeee.addElement(labels.elementAt(g));
+			}
+			//Calculate Holm
+			calculateHolm(ranks, N, K, labeee);
+
+ 
+			//____________________________________________________
+
+			Vector<String> exxR = new Vector<String>();
+			Vector<String> dddR = new Vector<String>();
+			Vector<String> labess = new Vector<String>();
+
+			for (int j = 0; j < labels.size(); j++){
+				labess.addElement(labels.elementAt(j));
+			}	
+
+			for (int j = 0; j < ranks.getCol(); j++){
+				dddR.addElement(""+j);
+				double dff = 0.0;
+				for (int g = 0; g < ranks.getRow(); g++){
+					/*dff = dff + ranks.getMatrix(g, j);*/
+					dff = dff + ranks.getElement(g, j);
+				}
+				exxR.addElement(""+dff);
+			}
+
+			//ordenar
+			for (int j = 0; j < dddR.size() ; j++){
+				double minm = Double.parseDouble(exxR.elementAt(j));
+				for (int g = 0; g < dddR.size(); g++){
+
+					if (minm < Double.parseDouble(exxR.elementAt(g))){
+						String trxx = labess.elementAt(j);
+						String trxy = labess.elementAt(g);
+						labess.setElementAt(trxy, j);
+						labess.setElementAt(trxx, g);
+						String trxx2 = dddR.elementAt(j);
+						String trxy2 = dddR.elementAt(g);
+						dddR.setElementAt(trxy2, j);
+						dddR.setElementAt(trxx2, g);
+						String trxx3 = exxR.elementAt(j);
+						String trxy3 = exxR.elementAt(g);
+						exxR.setElementAt(trxy3, j);
+						exxR.setElementAt(trxx3, g);
+						minm = Double.parseDouble(exxR.elementAt(g));
+					}
+				}
+
+			}
+
+			for (int j = 0 ; j < dddR.size(); j++){
+				System.out.println("alg = "+ dddR.elementAt(j)+" - "+ this.roundersII(Double.parseDouble(exxR.elementAt(j)), 6)
+				     + " - "+ labess.elementAt(j));
+
+			}
+
+			int K2 = nTopAlgorithms; //indicate number algorithm
+			/*int N2 = lines.size() - 1;*/ //indicate number experiments
+			int N2 = this.values.getRow();
+			//Create matrix values
+			Matrix values2 = new Matrix(N2, K2);
+			//values2.printlnAll();
+
+			//llenar values2
+			for (int j = 0; j < K2; j++){
+				for (int g = 0; g < N2; g++){
+					/*values2.setMatrix(g, j, values.getMatrix(g, Integer.parseInt(dddR.elementAt(j))));*/
+					values2.setElement(g, j, values.getElement(g, Integer.parseInt(dddR.elementAt(j))));
+				}
+			}
+
+
+			//Calculate Rank
+			Matrix ranks2 = new Matrix(N2, K2);
+			Vector<String> exx2 = new Vector<String>();
+			Vector<String> ddd2 = new Vector<String>();
+			for (int j = 0; j < values2.getRow(); j++){
+				//for (int j = 0; j < 1; j++){
+				for (int g = 0; g < values2.getCol(); g++){
+					exx2.addElement(""+g);
+				}
+
+				double ranking = 1;
+
+				while(exx2.size() != 0){
+					double max = 1e-40; 
+
+					for (int g = 0; g < exx2.size(); g++){
+						/*double tmpx = values2.getMatrix(j, Integer.parseInt(exx2.elementAt(g)));*/
+						double tmpx = values2.getElement(j, Integer.parseInt(exx2.elementAt(g))); 
+						if (tmpx > max){
+							ddd2.removeAllElements();
+							max = tmpx;
+							ddd2.addElement(exx2.elementAt(g));
+						} else if (tmpx == max){
+							ddd2.addElement(exx2.elementAt(g));
+						}
+					}
+					double rankTemp = (ddd2.size()+ 2*ranking - 1)/2;
+					//System.out.println(""+ranking+"---"+ddd.size()+"..."+rankTemp);
+					ranking=ranking + ddd2.size();
+
+					for (int g = 0; g < ddd2.size(); g++){
+						/*ranks2.setMatrix(j, Integer.parseInt(ddd2.elementAt(g)), rankTemp);*/
+						ranks2.setElement(j, Integer.parseInt(ddd2.elementAt(g)), rankTemp);
+					}
+
+					for (int g = 0; g < ddd2.size(); g++){
+						int rs = exx2.indexOf(ddd2.elementAt(g));
+						exx2.removeElementAt(rs);						
+						//ranks.setMatrix(j, Integer.parseInt(ddd.elementAt(g)), rankTemp);
+					}
+
+				}				
+
+			} 
+			System.out.println();
+			System.out.println("***********************************************");
+			System.out.println("*** VALUES IN THE MATRIX **********************");
+			System.out.println("***********************************************");
+			
+			info = info + "\nTop Algorithms "+this.nTopAlgorithms+"\n";
+			info = info + "-----------------------------------";
+			values2.printlnAll();
+			System.out.println();
+			System.out.println("***********************************************");
+			System.out.println("*** RANKS IN THE MATRIX ***********************");
+			System.out.println("***********************************************");
+			info = info + "\nRanks Matrix   \n";
+			info = info + "-----------------------------------\n";
+
+			if (labess.size() > nTopAlgorithms){				
+				while (labess.size() > nTopAlgorithms){
+					labess.removeElementAt(labess.size()-1);
+				}				
+			} 
+
+			genMatrix(ranks2, nameFile, "RankTop_", labess);  /// Esto es nuevo!!!!!!!!!!!!!!!
+			ranks2.printlnAll();
+			info = info + ranks2.toString();
+			//Calculate Friedman
+			double Friedman2 = calculateFriedmanX (ranks2, N2, K2);
+
+
+			//Calculate Iman 
+
+			double Iman2 = calculateIman(Friedman2, N2, K2);
+
+			//Calculate Holm
+
+			calculateHolm(ranks2, N2, K2, labess);
+
+			
+			if (graph){
+				BoxPlotGraph demo = new BoxPlotGraph("BOX PLOT", ranks.getMatrix(), labels);
+				demo.pack();
+				/* RefineryUtilities.centerFrameOnScreen(demo);*/
+				demo.setVisible(true);
+				
+				BoxPlotGraph demf = new BoxPlotGraph("BOX PLOT [TOP]", ranks2.getMatrix(), labess);
+				demf.pack();
+				/* RefineryUtilities.centerFrameOnScreen(demo);*/
+				demf.setVisible(true);
+				
+			}
+
+
+			/*
+			 * I include methods to generate boxplot in Matlab. First, sort columns 
+			 * for median and media. Second, generate the files *.m     
+			 */
+
+			genFilesMatlab( "Rank_", ranks, labels);
+			genFilesMatlab( "RankTop_", ranks2, labess);
+
+
+		} catch(Exception e){
+			e.printStackTrace();
+			System.out.println("java FriedmanIman _file _top");
+		}
+	}
 
 	public  void genFilesMatlab( String prefix, Matrix ranks, Vector<String> labels){
 
@@ -806,5 +1155,12 @@ public class FriedmanImanHolm {
 		this.info = info;
 	}
 	
-	
+	public boolean getGraph() {
+		return graph;
+	}
+
+	public void setGraph(boolean info) {
+		this.graph = info;  
+
+	}
 }
