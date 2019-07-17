@@ -195,7 +195,7 @@ public class FriedmanImanHolm {
 			info = info + ranks.toString();
 
 			//Calculate Friedman
-			double Friedman = calculateFriedmanX(ranks, N, K);
+			double Friedman = calculateFriedman(ranks, N, K);
 
 			//Calculate Iman 
 			double Iman = calculateIman(Friedman, N, K);
@@ -350,7 +350,7 @@ public class FriedmanImanHolm {
 			
 			//Calculate Friedman
 
-			double Friedman2 = calculateFriedmanX (ranks2, Ntop, Ktop);
+			double Friedman2 = calculateFriedman(ranks2, Ntop, Ktop);
 
 
 			//Calculate Iman 
@@ -540,7 +540,7 @@ public class FriedmanImanHolm {
 			info = info + ranks.toString();
 
 			//Calculate Friedman
-			double Friedman = calculateFriedmanX( ranks, N, K);
+			double Friedman = calculateFriedman(ranks, N, K);
 
 			//Calculate Iman 
 			double Iman = calculateIman(Friedman, N, K);
@@ -692,7 +692,7 @@ public class FriedmanImanHolm {
 			ranks2.printlnAll();
 			info = info + ranks2.toString();
 			//Calculate Friedman
-			double Friedman2 = calculateFriedmanX (ranks2, Ntop, Ktop);
+			double Friedman2 = calculateFriedman(ranks2, Ntop, Ktop);
 
 
 			//Calculate Iman 
@@ -1036,7 +1036,7 @@ public class FriedmanImanHolm {
 	}
 
 
-	public  double calculateFriedman(Matrix values2, Matrix ranks2, int N, int K){
+	/*public  double calculateFriedmanOld(Matrix values2, Matrix ranks2, int N, int K){
 		double Friedman2 = 0.0;
 		System.out.println("N = "+N+ " --- "+"K = "+K);
 		info = info + "\nAlgorithms : "+K+ " --- Instances : "+N+"\n";
@@ -1045,7 +1045,7 @@ public class FriedmanImanHolm {
 		for (int g = 0; g < values2.getCol(); g++){
 			double media = 0.0;
 			for (int j = 0; j < values2.getRow(); j++){
-				/*media=media+ ranks2.getMatrix(j, g);*/
+				
 				media=media+ ranks2.getElement(j, g);
 			}
 			media=media/values2.getRow();
@@ -1056,14 +1056,14 @@ public class FriedmanImanHolm {
 		//System.out.println("Friedman = "+Friedman);
 		Friedman2 = Friedman2*12*N/(K*(K+1));
 		return Friedman2;
-	}
+	}*/
 
 	
 	@SuppressWarnings("static-access")
-	public  double calculateFriedmanX(Matrix ranks2, int N, int K){
+	public  double calculateFriedman(Matrix ranks2, int N, int K){
 		double Friedman2 = 0.0;
 		Statistics stats = new Statistics();
-		double beta = (K+1)/2;
+		double beta = (K+1)/2.0;
 		//System.out.println("***********************************************");
 		//System.out.println("*** FRIEDMAN TEST *****************************");
 		//System.out.println("***********************************************");
@@ -1107,13 +1107,12 @@ public class FriedmanImanHolm {
 
 
 	@SuppressWarnings("static-access")
-	public   void calculateHolm(Matrix ranks2, int N, int K, Vector<String> labelsTopAlg){
+	public void calculateHolm(Matrix ranks2, int N, int K, Vector<String> labelsTopAlg){
 	 
 		Statistics stats = new Statistics();
 		double beta = (double) K*(K+1)/(6*N);
 		//System.out.println("beta "+beta);
-		beta=Math.sqrt(beta);
-		double alfa = 0.05;
+		beta=Math.sqrt(beta); 
 		Vector<String> ss = new Vector<String>();
 		//System.out.println();
 		//System.out.println("***********************************************");
@@ -1167,7 +1166,7 @@ public class FriedmanImanHolm {
 		info = info + Terminal.separator();
 		for (int j = 1 ; j < ss.size(); j++){
 			double ttp = ((Double.parseDouble(ss.elementAt(j)) - leader)/beta);
-			double ptenor = (alfa/(K-(K-j)));
+			double ptenor = (alpha/(K-(K-j)));
 			double pp = (1-stats.normalProbability(ttp)) ;
 			
 			
