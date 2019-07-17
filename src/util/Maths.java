@@ -29,6 +29,15 @@ public class Maths {
 		return Math.round(numero*Math.pow(10, decimals))/Math.pow(10, decimals);
 	}
 	
+	public static String rounds(double d, int decimal){
+		double presc = Math.pow(10, decimal);
+		
+		double tmp = d * presc;
+		tmp = (double) Math.round(tmp) / presc;
+
+		return ""+tmp;
+	}
+	
 	public static double precision(double value, int dec){
 		int pwn = (int) Math.pow(10, dec);
 		int nmbr = (int)(value*pwn);

@@ -1,0 +1,2 @@
+#!/bin/bash  
+javac -d bin/ -cp "src:./lib/jfreechart-1.0.19.jar:./lib/jcommon-1.0.23.jar:./lib/commons-math3-3.6.1.jar" src/*.java

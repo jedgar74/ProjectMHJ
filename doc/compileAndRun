@@ -6,3 +6,14 @@ http://www.java2s.com/Code/Java/Chart/CatalogChart.htm
 javac -d bin/ -cp "src:./lib/jfreechart-1.0.19.jar:./lib/jcommon-1.0.23.jar"  src/*.java
 
 java -cp "bin:./lib/jfreechart-1.0.19.jar:./lib/jcommon-1.0.23.jar" Analisis
+
+
+javac -d bin/ -cp "src:./lib/jfreechart-1.0.19.jar:./lib/jcommon-1.0.23.jar:./lib/commons-math3-3.6.1.jar"  src/*.java
+
+java -cp "bin:./lib/jfreechart-1.0.19.jar:./lib/jcommon-1.0.23.jar:./lib/commons-math3-3.6.1.jar" Analisis
+
+
+
+
+
+

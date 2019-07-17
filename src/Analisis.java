@@ -6,25 +6,21 @@ public class Analisis {
 	
 	static int n=4;
 	static int m=6; //methods
-	static String type="MAX";
+	static String type="MIN";
 	
-/*
- * 
- * name: Analisis.main
- * @param
- * @return
- * 
- */
+	/*
+	* 
+	* name: Analisis.main
+	* @param
+	* @return
+	* 
+	*/
 	public static void main(String[] args) {
 		//leer archivo de datos 
-/*
+		/*
 		double[][] matrixAC =  new double[m][n];
-		String[] labels = new String[m]; 
-
-
-*/
-
-		
+		String[] labels = new String[m];  
+		*/ 
 		double[][] matrixAC = { { 8, 7, 2, 1  }, { 5, 3, 7, 5 }, {7, 5, 6, 4 }, {
 			9, 9, 7, 3 }, {11, 10, 3, 7 }, {6, 9, 5, 4} }; 
 		String[] labels= { "a", "b", "c", "d" , "g", "MINn"};
@@ -37,7 +33,7 @@ public class Analisis {
 		FriedmanImanHolm f = new FriedmanImanHolm(3); 
 		f.setLabels(labels);
 		f.setValues(values);
-		/*if (type.equals("MIN")){
+		if (type.equals("MIN")){
 			f.setGraph(true);
 			f.minProblem();
 			String info = f.getInfo();
@@ -47,7 +43,7 @@ public class Analisis {
 			f.maxProblem();
 			String info = f.getInfo();
 			//System.out.println(info); 
-		}*/
+		}
 
 		int code = 0; 
 		/*double[] weights = new double[n];
@@ -57,8 +53,8 @@ public class Analisis {
      
 	    MulticriteriaMethods mc = new MulticriteriaMethods(m, n, 
 			matrixAC, weights, typeCriteria );
-		
-		mc.run(code);	
+		mc.setVFactor(-1);
+		//mc.run(code);	
 
 	}
 }

@@ -7,7 +7,10 @@ import java.util.Vector;
 import util.Maths;
 import util.Matrix;
 
+import io.Terminal;
+
 import graph.PlotGraph;
+
 
 public class MulticriteriaMethods {
 	
@@ -15,25 +18,34 @@ public class MulticriteriaMethods {
 	public static int m;
 	public static int n;
 	public static double[] w;
-	public static int[] c;
+	public static int[] c; 
 	
 	public static String info;
-	public static int decimal =4; 
+	public static int decimal = 4; 
 	public static boolean graph = true;
 	
 	public static int typeSIR = 0 ;  //1==SIR-SAW,  0=SIR-TOPSIS
 	public static String typePROMETHEE = "II"; 
 	public static double vFactor = 0.5;
-
- 	public MulticriteriaMethods(int m, int n, double[][] t, double[] w, int[] c ) {
-		this.w=w;
-		this.m=m;
-		this.n=n;
-		this.c=c;
+	
+	public static String[] pfs; //preference functions
+	public static double[][] limpfs; 
+	/*
+	* 
+	* MulticriteriaMethods:  this is the constructor  
+	* @param
+	* @return
+	* 
+	*/
+ 	public MulticriteriaMethods(int alt, int crit, double[][] t, double[] weights, int[] tCrit ) {
+		this.w=weights;
+		this.m=alt;
+		this.n=crit;
+		this.c=tCrit;
 		
 		A = new Matrix(m, n);
 		 
-		info="\n"+"MCD Matrix\n"+ "-----------------------------------\n";
+		info = "\n" + "MCD Matrix\n" + Terminal.separator(); 
 		
 		for(int i=0;i<m;i++) {
 			for(int j=0;j<n;j++) {
@@ -41,9 +53,9 @@ public class MulticriteriaMethods {
 			}
 		}
 		 
-		info=info+A.toString(4); 
+		info = info + A.toString(4); 
 		 
-		info=info+"\n"+"Weights\n"+ "-----------------------------------\n";
+		info = info + "\n" + "Weights\n" + Terminal.separator();
 		 
 		
 		for(int i=0;i<n;i++) {
@@ -81,9 +93,16 @@ public class MulticriteriaMethods {
 	}
 
 
+	/*
+	* 
+	* run:    
+	* @param
+	* @return
+	* 
+	*/
 	public static void run(int code) {
 		if (code==0) {
-			topsis(m, n, A, w, c);
+			topsis();
 			//vikor(m, n, A, w, c);
 			vikor();
 			//promethee(m, n, A, w, c);
@@ -91,7 +110,7 @@ public class MulticriteriaMethods {
 			//sir(m, n, A, w, c);
 			sir();
 		} else if (code==1) {
-			topsis(m, n, A, w, c);
+			topsis();
 		} else if (code==2) {
 			//vikor(m, n, A, w, c);
 			vikor();
@@ -106,19 +125,22 @@ public class MulticriteriaMethods {
 	}
 	
 	
-	public static void topsis(int m, int n, Matrix A, double[] w, int[] c) {
-		/*System.out.println(" ");
-		System.out.println("TOPSIS Test");
-		System.out.println("-----------------------------------");
+	public static void topsis() {
+		/* 
 		DecimalFormatSymbols simD = new DecimalFormatSymbols();
 		simD.setDecimalSeparator('.');
 		DecimalFormat forD = new DecimalFormat("0.00000", simD); */
-		info=info+"\n"+"TOPSIS method\n"+ "-----------------------------------\n";
+		
+		//info=info+"\n***********************************************";
+		//info=info+"\n*******     TOPSIS method               *******";
+		//info=info+"\n***********************************************\n"; 
+		info = info + Terminal.title("TOPSIS method");
+		
 		//step1. build the matrix
 		
 		//step 2. normalize matrix
 		Matrix N = new Matrix(m, n);
-		N= normal(A);
+		N = normal(A);
 		/*N.printlnAll();*/
 		/*N.printlnAll(8);*/
 		info=info+"\n"+"Normalized matrix\n" ;
@@ -127,9 +149,9 @@ public class MulticriteriaMethods {
 		
 		//step 3. Calculate the weighted normalized decision matrix.
 		Matrix V = new Matrix(N.getRow(), N.getCol());
-		for(int j=0;j<n;j++) { 
-			for(int i=0;i<m;i++) {
-				V.setElement(i, j, w[j]*N.getElement(i, j));
+		for(int j = 0; j < n; j++) { 
+			for(int i = 0; i < m; i++) {
+				V.setElement(i, j, w[j] * N.getElement(i, j));
 			}
 		}
 		/*System.out.println("");*/
@@ -181,8 +203,8 @@ public class MulticriteriaMethods {
 		//
 		//
 		//step 5. separation measures from the positive ideal solution and the negative ideal solution
-		double[] dpos= new double[N.getRow()];
-		double[] dneg= new double[N.getRow()];
+		double[] dpos = new double[N.getRow()];
+		double[] dneg = new double[N.getRow()];
 
 		for(int i=0;i<m;i++) {
 			double tmp =0;
@@ -222,8 +244,7 @@ public class MulticriteriaMethods {
 		if (graph){
 			String[] labels = {"D+","D-","R " };
 			PlotGraph demo = new PlotGraph("TOPSIS", dpos, dneg  , rind , labels);
-			demo.pack();
-			/* RefineryUtilities.centerFrameOnScreen(demo);*/
+			demo.pack(); 
 			demo.setVisible(true);  
 		}
 		
@@ -237,7 +258,7 @@ public class MulticriteriaMethods {
 			System.out.print(" "+(int)rnkg[i]);
 		}
 		System.out.println("");*/
-		info=info+"\n"+"-----------------------------------\n";
+		info = info + "\n" + Terminal.separator(); 
 		double[] rnkg = new double[A.getRow()];
 		rnkg = ranksMax(rind); 
 		printingPlusOne("Z", rnkg, decimal); 
@@ -245,11 +266,13 @@ public class MulticriteriaMethods {
 	}
 
 
-	public static void vikor( ) {
+	public static void vikor() {
+		info = info + Terminal.title("VIKOR Test");
+		//info=info+"\n***********************************************";
+		//info=info+"\n*******     VIKOR Test                  *******";
+		//info=info+"\n***********************************************\n"; 
 		 
-		info=info+"\n"+"VIKOR Test\n"+ "-----------------------------------\n";
-		//step1. build the matrix
-		 
+		//step1. build the matrix 
 
 		//step  . normalize matrix
 		/*Matrix N = new Matrix(m, n);
@@ -323,11 +346,12 @@ public class MulticriteriaMethods {
 		for(int i=0;i<m;i++) {
 			System.out.print(" "+forD.format(R[i]));
 		}*/
+		info = info + "\n";
 		printing("R", R, decimal);
 		printing("S", S, decimal);
 
-		vFactor = 0.5*(n + 1)/n;
-		 
+		
+		info=info+" vFactor "+Maths.precisionAndSpaces(vFactor, decimal, decimal+7)+"\n";	 
 		for(int i=0;i<m;i++) {
 			double group = vFactor*(S[i]-Smin)/(Smax-Smin);
 			double individual = (1-vFactor)*(R[i]-Rmin)/(Rmax-Rmin);
@@ -431,19 +455,31 @@ public class MulticriteriaMethods {
 		}
  
 		
-		info=info+"\n"+"-----------------------------------\n";  
+		info = info + "\n" + Terminal.separator();  
 		printingPlusOne("Rk", Qs, decimal);
 
 	}
 
+
 	/*superiority and inferiority ranking method*/
 	public static void sir() { 
-		info=info+"\n"+"SIR Test\n"+ "-----------------------------------\n";
-		double[] p = { 1, 2};
-		String pf = "li";
+		//info=info+"\n***********************************************";
+		//info=info+"\n*******     SIR Test                    *******";
+		//info=info+"\n***********************************************\n";
+		info = info + Terminal.title("SIR Test"); 
+		 
+		//double[] p = { 1, 2};
+		//String pf = "li";
 		
-		// calculate S matrixMatrix tmp = new Matrix(m, n);
-		Matrix S = SImatrix( p, c , pf) ;
+		if (pfs == null){
+			setPreferenceFunctionsAsSame("li");
+		} 
+		
+		if (limpfs == null){
+			setLimPreferenceFunctionsAsSame(1, 2);
+		}
+		// calculate S matrix  
+		Matrix S = sirMatrix(limpfs, c , pfs) ;
 		info=info+S.toString("S",4)+"\n";
 
 		int[] u = new int[n];
@@ -455,35 +491,35 @@ public class MulticriteriaMethods {
 		}
 		
 		// calculate I matrix
-		Matrix I = SImatrix( p, u, pf);
+		Matrix I = sirMatrix(limpfs, u, pfs);
 		info=info+I.toString("I",4)+"\n";
 
 		double[] Sflow = new double[m];
 		double[] Iflow = new double[m];
 		if (typeSIR == 1){ // SIR-SAW
 			// calculate S-flow
-			Sflow = SIflowsSAW(w, S);
+			Sflow = sirSAW(w, S);
 
 			// calculate I-flow
-			Iflow = SIflowsSAW(w, I);
+			Iflow = sirSAW(w, I);
 		} else { // SIR-TOPSIS
 			// calculate S-flow
 			// Splus, Sminus = SIRTOPSIS(w, S, 2);
-			// Sflow = SIflowsTOPSIS(Splus, Sminus);
-			Sflow = SIflowsTOPSIS(w, S, 2);
+			// Sflow = sirTOPSIS(Splus, Sminus);
+			Sflow = sirTOPSIS(w, S, 2);
 			
 			// calculate I-flow
 			// Iplus, Iminus = SIRTOPSIS(w, I, 2);
-			// Iflow = SIflowsTOPSIS(Iplus, Iminus);
-			Iflow = SIflowsTOPSIS(w, I, 2);
+			// Iflow = sirTOPSIS(Iplus, Iminus);
+			Iflow = sirTOPSIS(w, I, 2);
 		}
 		// calculate n-flow
 		double[] nflow = new double[m];
-		nflow =  flow(Sflow, Iflow, 0);
+		nflow =  sirFlow(Sflow, Iflow, 0);
 
 		// calculate r-flow
 		double[] rflow = new double[m];
-		rflow =  flow(Sflow, Iflow, 1);
+		rflow =  sirFlow(Sflow, Iflow, 1);
 
 		// print flows
 		printing("Sflow", Sflow, decimal);
@@ -505,14 +541,14 @@ public class MulticriteriaMethods {
 			demo.setVisible(true);  
 		}
 		
-		info=info+"\n"+"-----------------------------------\n";
+		info = info + "\n" + Terminal.separator();
 		double[] Qs = new double[A.getRow()];
 		Qs = ranksMax(rflow);
 		printingPlusOne("Z", Qs, decimal);
 	}
 	
 	
-	public static Matrix SImatrix( double[] p, int[] c, String f) {
+	public static Matrix sirMatrix(double[][] p, int[] c, String[] f) {
 		// Aquí  debemos tomar en cuenta el vector completo p f
 		Matrix tmp = new Matrix(m, n); 
 		for (int i = 0; i < n; i++) {
@@ -520,8 +556,8 @@ public class MulticriteriaMethods {
 				double k = 0;
 				for (int h = 0; h < m; h++) {
 					// k = k + pf(A[j, i], A[h, i], p[0, i], p[1, i], f[i], c[i]);
-					k = k + pf(A.getElement(j, i), A.getElement(h, i), p[0], p[1], 
-						f, c[i]);
+					k = k + pf(A.getElement(j, i), A.getElement(h, i), p[0][i], p[1][i], 
+						f[i], c[i]);
 					tmp.setElement(j, i, k);  
 				}
 			}
@@ -581,7 +617,8 @@ public class MulticriteriaMethods {
 		return f;
 	}
 	
-	public static double[] SIflowsSAW(double[] w, Matrix T){
+	
+	public static double[] sirSAW(double[] w, Matrix T){
 		double[] tflow = new double[T.getRow()];
 		
 		for (int i = 0; i < T.getRow(); i++) { 
@@ -592,7 +629,8 @@ public class MulticriteriaMethods {
 		return tflow;
 	}
 	
-	public static double[] SIflowsTOPSIS(double[] w, Matrix T, int l){
+	
+	public static double[] sirTOPSIS(double[] w, Matrix T, int l){
 		double[] tmp = new double[T.getRow()];
 		
 		double[] p = new double[T.getRow()];
@@ -630,7 +668,8 @@ public class MulticriteriaMethods {
 		return tmp;
 	}
 	
-	public static double[] flow(double[] Sflow, double[] Iflow, int t){
+	
+	public static double[] sirFlow(double[] Sflow, double[] Iflow, int t){
 		double[] tmp = new double[Sflow.length];
 		
 		if (t == 0){   
@@ -646,17 +685,33 @@ public class MulticriteriaMethods {
 	}
 		
 		
-	public static void promethee( ) {
+	public static void promethee() {
+		//info=info+"\n***********************************************";
+		//info=info+"\n*******     PROMETHEE Test              *******";
+		//info=info+"\n***********************************************\n";
+		info = info + Terminal.title("PROMETHEE Test"); 
 		
-		info=info+"\n"+"PROMETHEE Test\n"+ "-----------------------------------\n";
-		double[] p = { 1, 2};
+		//double[] p = { 1, 2};
 		//info=info+A.toString(4);
-		String pf = "li"; 
+		//String pf = "li"; 
+		
+		if (pfs == null){
+			setPreferenceFunctionsAsSame("li");
+		} 
+		
+		if (limpfs == null){
+			setLimPreferenceFunctionsAsSame(1, 2);
+		}
 		
 		Matrix tmp = new Matrix(m, n);
+		double[] tmpx = new double[n];
+		
 		for (int j = 0; j < n; j++) { 
-			info=info+"\n"+"Alternative "+(j+1)+"\n";
-			double[] weightedflows=unicriterion( m, A.getCols(j),p, pf , c[j]) ;
+			info = info + "\n" + "Alternative " + (j+1) + "\n";
+			tmpx[0] = limpfs[0][j];
+			tmpx[1] = limpfs[1][j];
+			
+			double[] weightedflows = unicriterion(m, A.getCols(j), tmpx, pfs[j], c[j]) ;
 			
 			printing("WF", weightedflows, decimal);
 			for (int i = 0; i < m; i++) { 
@@ -681,7 +736,7 @@ public class MulticriteriaMethods {
 			demo.setVisible(true);  
 		}
 		
-		info=info+"\n"+"-----------------------------------\n";
+		info=info+"\n"+ Terminal.separator();
 		double[] Qs = new double[A.getRow()];
 		Qs = ranksMax(totalNFlows);
 		printingPlusOne("Z", Qs, decimal);
@@ -737,7 +792,7 @@ public class MulticriteriaMethods {
 			}
 	    }
 	    
-	    info=info+uni.toString("",4);
+	    info = info + uni.toString("",4);
 	    
 	    if (c == 1) 
 	        uni.trasponse();
@@ -754,38 +809,10 @@ public class MulticriteriaMethods {
     
 		return net_flows;
 
-	}
+	} 
 	
-	
-	public static double[] ranks2(double[] v) {
 
-		double[]  ranks = new double[v.length];
-		double[]  tmps = new double[v.length];
-
-		for(int i=0;i<v.length;i++) {
-			ranks[i]=i;
-			tmps[i]=v[i];
-		}
-		
-		for(int i=0;i<v.length-1;i++) {
-			double tmp =0;
-			for(int j=i+1;j<v.length;j++) {
-				if (tmps[j] < tmps[i]) {
-					tmp = ranks[j];
-					ranks[j]=ranks[i];
-					ranks[i]=tmp;
-					tmp = tmps[j];
-					tmps[j]=tmps[i];
-					tmps[i]=tmp;
-				}
-			}	
-		}
-
-		return ranks;
-	}
-
-
-	public static  double[] ranking(double[] v) {
+	public static double[] ranking(double[] v) {
 
 		double[]  ranks = new double[v.length];
 
@@ -840,7 +867,7 @@ public class MulticriteriaMethods {
 			tmps[i]=v[i];
 		}
 
-		for(int i=0;i<v.length-1;i++) {
+		for(int i = 0; i < v.length - 1; i++) {
 			double tmp =0;
 			for(int j=i+1;j<v.length;j++) {
 				if (tmps[j] < tmps[i]) {
@@ -884,6 +911,8 @@ public class MulticriteriaMethods {
 
 		return ranks;
 	}
+	
+	
 	/*public static void printing(String name, double[] v) {
 		DecimalFormatSymbols simD = new DecimalFormatSymbols();
 		simD.setDecimalSeparator('.');
@@ -968,4 +997,45 @@ public class MulticriteriaMethods {
 
 		return N;
 	}
+
+
+	public static void setVFactor(double v) {
+		if (v >= 0 && v <= 1) {
+			vFactor = v;
+		} else
+			vFactor = 0.5 * (n + 1) / n;
+		
+	}
+
+
+	public static void setPreferenceFunctionsAsSame(String pfsr) {
+		pfs = new String[n];
+		for (int j = 0; j < n; j++) {  
+			pfs[j] = pfsr; 
+		} 
+	}
+	
+
+	public static void setPreferenceFunctions(String[] pfsr) {
+		pfs = pfsr; 
+	}
+	
+	 
+	public static void setDecimal(int t) {
+		decimal = t;
+	}
+	
+	public static void setLimPreferenceFunctionsAsSame(double l, double u) {
+		limpfs = new double[2][n];
+		for (int j = 0; j < n; j++) {  
+			limpfs[0][j] = 1; 
+			limpfs[1][j] = 2; 
+		} 
+	}
+	
+
+	public static void setLimPreferenceFunctions(double[][]  pfsr) {
+		limpfs = pfsr; 
+	}
+	 
 }
