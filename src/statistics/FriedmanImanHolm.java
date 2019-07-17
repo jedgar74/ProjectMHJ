@@ -40,7 +40,7 @@ public class FriedmanImanHolm {
 	Matrix values;
 	
 	boolean graph =false;
-	double alpha = 0.95;
+	double alpha = 0.05;
     int decimal = 4; 
     
 	public FriedmanImanHolm() {
@@ -1094,14 +1094,14 @@ public class FriedmanImanHolm {
 		System.out.println("Calculate with degree = "+(K-1)+ " and obtain critical value with one sided ");
 		ChiSquaredDistribution x2 = new ChiSquaredDistribution(K-1);
 	 
-		System.out.println("Critical value = "+Maths.precisionAndSpaces(x2.inverseCumulativeProbability(alpha), decimal, 10)+ "   alpha = "+alpha);		
+		System.out.println("Critical value = "+Maths.precisionAndSpaces(x2.inverseCumulativeProbability(1 - alpha), decimal, 10)+ "   alpha = "+alpha);		
 		System.out.println("***********************************************");
 		System.out.println(); 
 		
 		info = info + "Friedman value = " + Maths.rounds(Friedman2, decimal)+"\n";
 		info = info + "prob Chi-square function = " + Maths.rounds(stats.chiSquaredProbability(Friedman2, K-1), decimal) +"\n";
 		info = info + "Calculate with degree = "+(K-1)+ " and obtain critical value with one sided "+"\n";
-		info = info + "Critical value = " + Maths.rounds(x2.inverseCumulativeProbability(alpha), decimal)+ "   alpha = "+alpha +"\n"; 
+		info = info + "Critical value = " + Maths.rounds(x2.inverseCumulativeProbability(1 - alpha), decimal)+ "   alpha = "+alpha +"\n"; 
 		return Friedman2;
 	}
 
@@ -1220,11 +1220,11 @@ public class FriedmanImanHolm {
 		System.out.println("Calculate with degree = "+(K-1)+ " X "+(K-1)*(N-1)+" and obtain critical value with one sided ");		
 		FDistribution x2 = new FDistribution(K-1,(K-1)*(N-1));
 	 
-		System.out.println("Critical value = " + Maths.precisionAndSpaces(x2.inverseCumulativeProbability(alpha), decimal, 10)+ "   alpha = "+alpha);		
+		System.out.println("Critical value = " + Maths.precisionAndSpaces(x2.inverseCumulativeProbability(1 - alpha), decimal, 10)+ "   alpha = "+alpha);		
 		System.out.println("***********************************************");
 		System.out.println();
 		info = info + "Calculate with degree = "+(K-1)+ " X "+(K-1)*(N-1)+" and obtain critical value with one \n\tsided " +"\n"; 
-		info = info + "Critical value = "+ Maths.rounds(x2.inverseCumulativeProbability(alpha), decimal)+ "   alpha = "+alpha +"\n"; 
+		info = info + "Critical value = "+ Maths.rounds(x2.inverseCumulativeProbability(1 - alpha), decimal)+ "   alpha = "+alpha +"\n"; 
 		
 		return ttm /ttd;
 	}
