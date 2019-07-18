@@ -6,7 +6,7 @@ public class Analisis {
 	
 	static int n=4;
 	static int m=6; //methods
-	static String type="MIN";
+	static String type="MAX";
 	
 	/*
 	* 
@@ -40,7 +40,7 @@ public class Analisis {
 			//System.out.println(info); 
 		} else if (type.equals("MAX")){
 			f.setGraph(true);
-			f.maxProblem();
+			//f.maxProblem();
 			String info = f.getInfo();
 			//System.out.println(info); 
 		}
@@ -54,7 +54,7 @@ public class Analisis {
 	    MulticriteriaMethods mc = new MulticriteriaMethods(m, n, 
 			matrixAC, weights, typeCriteria );
 		mc.setVFactor(-1);
-		//mc.run(code);	
+		mc.run(code);	
 
 	}
 }

@@ -158,16 +158,16 @@ public class MulticriteriaMethods {
 		/*V.printlnAll();*/
 		/*V.printlnAll(8);*/
 		info=info+"\n"+"Weighted normalized decision matrix\n" ;
-		info=info+N.toString(4);
+		info=info+V.toString(4);
 		
 		
 		//step 4. positive ideal and negative ideal solutions
-		double[] vpos= new double[N.getCol()];
-		double[] vneg= new double[N.getCol()];
+		double[] vpos = new double[N.getCol()];
+		double[] vneg = new double[N.getCol()];
 		for(int j=0;j<n;j++) {
 			double max =-1e100;
 			double min =1e100;
-			for(int i=0;i<m;i++) {
+			for(int i = 0; i < m; i++) {
 				double pos = V.getElement(i, j);
 				if (pos > max ) {
 					max = pos;
@@ -196,7 +196,7 @@ public class MulticriteriaMethods {
 		
 		for(int i=0;i<n;i++) {
 			/*System.out.print(" "+forD.format(vneg[i]));*/
-			info=info+Maths.precisionAndSpaces(vpos[i], decimal, decimal+7) ;
+			info=info+Maths.precisionAndSpaces(vneg[i], decimal, decimal+7) ;
 		}
 		/*System.out.println("");*/
 		info=info+" \n\n";
@@ -313,8 +313,8 @@ public class MulticriteriaMethods {
 		double Rmax =-1e100;
 		
 		for(int i=0;i<m;i++) {
-			double sum =0;
-			double max =0;
+			double sum = 0;
+			double max = -1e100;
 			for(int j=0;j<n;j++) {
 				double value = w[j]*(fbest[j]-A.getElement(i, j))/(fbest[j]-fworst[j]);
 				sum=sum+value;
@@ -375,19 +375,19 @@ public class MulticriteriaMethods {
 
 		double dq = 1/((double)A.getRow()-1);
 		/*System.out.println("DQ="+dq);*/
-		info=info+" DQ "+Maths.precisionAndSpaces(dq, decimal, decimal+7)+"\n";
-		 
+		info = info + " DQ "+Maths.precisionAndSpaces(dq, decimal, decimal+7)+"\n";
+		info = info + "\n"; 
 				
 		double[] Rs = new double[A.getRow()];
 		double[] Ss = new double[A.getRow()];
 		double[] Qs = new double[A.getRow()];
 		System.out.println();
 		Qs = ranks(Q);
-		printing("Qs", Qs, decimal);
+		printingPlusOne("Qs", Qs, decimal);
 		Ss = ranks(S);
-		printing("Ss", Ss, decimal);
+		printingPlusOne("Ss", Ss, decimal);
 		Rs = ranks(R);
-		printing("Rs", Rs, decimal);
+		printingPlusOne("Rs", Rs, decimal);
 
 		if (graph){
 			String[] labels = {"R ","S ","Q " };
@@ -399,19 +399,20 @@ public class MulticriteriaMethods {
 
 
 		// first condition Cone
-		boolean Cone=false;
+		boolean Cone = false;
 
-		if ((Qs[1]-Qs[0]) >= dq) {
+		// if ((Qs[1] - Qs[0]) >= dq) {
+		if ((Q[(int)Qs[1] - 1] - Q[(int)Qs[0] - 1]) >= dq) {
 			/*System.out.println("--a--");*/
 			Cone=true;	
 		} 
 
 		// second condition
-		boolean Ctwo=false;
+		boolean Ctwo = false;
 
-		if ((Qs[0]==Ss[0]) || (Qs[0]==Rs[0])) {
+		if ((Qs[0] == Ss[0]) || (Qs[0] == Rs[0])) {
 			/*System.out.println("--b--");*/
-			Ctwo=true;	
+			Ctwo = true;	
 		} 
 
 
@@ -423,8 +424,9 @@ public class MulticriteriaMethods {
 			info=info+"(a) better "+ Maths.precisionAndSpaces(((int)Qs[0]+1), decimal, decimal+7) +"\n"; 
 		} else if (! Cone) {
 			int f=0;
-			for(int i=Qs.length-1;i>0;i--) {
-				if ((Qs[i]-Qs[0]) < dq) {
+			for(int i= Qs.length-1;i>0;i--) {
+				// if ((Qs[i]-Qs[0]) < dq) {
+				if ((Q[(int)Qs[i] - 1] - Q[(int)Qs[0] - 1]) >= dq) {
 					/*System.out.println("--c-- "+i);*/
 					f=i;
 					break;
