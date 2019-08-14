@@ -402,7 +402,7 @@ public class MulticriteriaMethods {
 		boolean Cone = false;
 
 		// if ((Qs[1] - Qs[0]) >= dq) {
-		if ((Q[(int)Qs[1] - 1] - Q[(int)Qs[0] - 1]) >= dq) {
+		if ((Q[(int)Qs[1]] - Q[(int)Qs[0]]) >= dq) {
 			/*System.out.println("--a--");*/
 			Cone=true;	
 		} 
@@ -425,8 +425,8 @@ public class MulticriteriaMethods {
 		} else if (! Cone) {
 			int f=0;
 			for(int i= Qs.length-1;i>0;i--) {
-				// if ((Qs[i]-Qs[0]) < dq) {
-				if ((Q[(int)Qs[i] - 1] - Q[(int)Qs[0] - 1]) >= dq) {
+				if ((Qs[i]-Qs[0]) < dq) {
+				// if ((Q[(int)Qs[i] - 1] - Q[(int)Qs[0] - 1]) >= dq) {
 					/*System.out.println("--c-- "+i);*/
 					f=i;
 					break;
@@ -480,9 +480,10 @@ public class MulticriteriaMethods {
 		if (limpfs == null){
 			setLimPreferenceFunctionsAsSame(1, 2);
 		}
+		
 		// calculate S matrix  
 		Matrix S = sirMatrix(limpfs, c , pfs) ;
-		info=info+S.toString("S",4)+"\n";
+		info=info+S.toString("S", 4)+"\n";
 
 		int[] u = new int[n];
 		for(int i=0;i<n;i++) {
@@ -494,7 +495,7 @@ public class MulticriteriaMethods {
 		
 		// calculate I matrix
 		Matrix I = sirMatrix(limpfs, u, pfs);
-		info=info+I.toString("I",4)+"\n";
+		info=info+I.toString("I", 4)+"\n";
 
 		double[] Sflow = new double[m];
 		double[] Iflow = new double[m];
@@ -709,7 +710,7 @@ public class MulticriteriaMethods {
 		double[] tmpx = new double[n];
 		
 		for (int j = 0; j < n; j++) { 
-			info = info + "\n" + "Alternative " + (j+1) + "\n";
+			info = info + "\n" + "Criterion " + (j+1) + "\n";
 			tmpx[0] = limpfs[0][j];
 			tmpx[1] = limpfs[1][j];
 			
@@ -738,7 +739,7 @@ public class MulticriteriaMethods {
 			demo.setVisible(true);  
 		}
 		
-		info=info+"\n"+ Terminal.separator();
+		info = info+"\n"+ Terminal.separator();
 		double[] Qs = new double[A.getRow()];
 		Qs = ranksMax(totalNFlows);
 		printingPlusOne("Z", Qs, decimal);
@@ -750,8 +751,8 @@ public class MulticriteriaMethods {
 		
 		printing("X", x, decimal);
 		uni.zeros();
-		for(int i=0;i<m;i++) {
-	        for(int j=0;j<m;j++)  {
+		for(int i = 0; i < m; i++) {
+	        for(int j = 0; j < m; j++)  {
 	            if (i == j) { 
 	                uni.setElement(i, j, 0);
 	            } else if (f.equals("u")) {  //Usual preference function

@@ -151,6 +151,12 @@ public class Analyzer {
 			System.out.println("\n:: Instance :: " + this.instances.get(ini));
 			System.out.println(":: N. Experiment.:: "+nameParameters.get(ini).nSolutions());
 			System.out.println("-----------------------------------");
+			System.out.print (Maths.spaces("", 24)  );
+			System.out.print (Maths.spaces("Better", 9)  );
+			System.out.print (Maths.spaces("N.Bet.", 9)  );
+			System.out.print (Maths.spaces("Mean", 9)  );
+			System.out.print (Maths.spaces("S.D.", 9)  );
+			System.out.println("-----------------------------------");
 			for (int rr = ini; rr < fin; rr++) {
 				System.out.print (Maths.spaces(nameParameters.get(rr).getLabel(), 24)  );
 
@@ -216,6 +222,12 @@ public class Analyzer {
 				fin = nameParameters.size() ;
 			r = r+"\n:: Instance :: " + this.instances.get(ini)+ "\n";
 			r = r+":: N. Experiment.:: "+nameParameters.get(ini).nSolutions()+"\n";
+			r = r+"-----------------------------------"+"\n";
+			r = r+Maths.spaces("", 24)  ;
+			r = r+Maths.spaces("Better", 9)   ;
+			r = r+Maths.spaces("N.Bet.", 9)   ;
+			r = r+Maths.spaces("Mean", 9)  ;
+			r = r+Maths.spaces("S.D.", 9)  +"\n";
 			r = r+"-----------------------------------"+"\n";
 			for (int rr = ini; rr < fin; rr++) {
 				r = r+Maths.spaces(nameParameters.get(rr).getLabel(), 24) ;
